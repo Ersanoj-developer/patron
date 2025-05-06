@@ -1,24 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Portrait Video with Bottom Name Overlay</title>
+  <title>Launch Video Page</title>
   <style>
-    * {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      width: 100%;
       height: 100%;
+      background: black;
       overflow: hidden;
       font-family: Arial, sans-serif;
-      background: white;
     }
 
-    .video-container {
+    .container {
       position: relative;
       width: 100vw;
       height: 100vh;
@@ -30,7 +26,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       height: 100%;
+      width: auto;
       object-fit: cover;
+      display: block;
+    }
+
+    @media (orientation: portrait) {
+      video {
+        width: 100%;
+        height: auto;
+      }
     }
 
     .overlay-bottom {
@@ -40,31 +45,62 @@
       transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.6);
       color: white;
-      padding: 12px 24px;
+      padding: 10px 20px;
       border-radius: 12px;
       font-size: 1.5rem;
       white-space: nowrap;
     }
 
-    @media (orientation: portrait) {
-      video {
-        width: 100%;
-        height: auto;
-      }
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      font-size: 2rem;
+      color: black;
+      z-index: 2;
+      transition: transform 0.2s ease;
+    }
+
+    .play-button:hover {
+      transform: translate(-50%, -50%) scale(1.1);
     }
   </style>
 </head>
 <body>
 
-<div class="video-container">
-  <video autoplay muted loop playsinline>
+<div class="container">
+  <video id="launchVideo" playsinline>
     <source src="https://github.com/user-attachments/assets/fae8287b-15c3-49b2-b5fb-ab31b1018e19" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <div class="overlay-bottom">  <center>Rev.Fr.Emmanuel Peechatt</center> Patron - Kakkanattu Family Union</div></center>
- 
+  <button id="playBtn" class="play-button">▶</button>
+
+  <div class="overlay-bottom"><Center>Rev.Fr.Emmauel Peechatt</Center><p>Patron - Kakkanattu Kudumbayogam</p> </div>
 </div>
+
+<script>
+  const video = document.getElementById('launchVideo');
+  const playBtn = document.getElementById('playBtn');
+
+  playBtn.addEventListener('click', () => {
+    video.play();
+    playBtn.style.display = 'none';
+  });
+
+  // Optional: Hide play button if video plays by other means
+  video.addEventListener('play', () => {
+    playBtn.style.display = 'none';
+  });
+</script>
 
 </body>
 </html>
+
